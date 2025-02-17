@@ -1,0 +1,201 @@
+---
+title: "Species"
+author: "Angela van Winden"
+date: "2/25/2020"
+output: html_document
+---
+
+```{r}
+species1<-read.csv("Species.csv")
+library(zoo)
+library(ggplot2)
+library(lubridate)
+#setting up the date columns to function correctly
+species1$day <- as.Date(species1$Date, "%m/%d/%y")
+species1$doy <- yday(species1$day)
+#need to remove data that hasn't been asssed
+species<- subset(species1, species1$day <"2020-04-19")
+```
+
+```{r}
+species$parabola<- species$Phenostage
+species$parabola<-as.character(species$parabola)
+species$parabola[species$parabola=="7"] <- "1"
+species$parabola[species$parabola=="6"]<-"2"
+species$parabola[species$parabola=="5"]<-"3"
+species$parabola<- as.numeric(species$parabola)
+```
+
+```{r}
+species_plot <- ggplot(species, aes(x=doy, y=parabola, color=Species, fill=Species)) +
+  geom_jitter(height = .2) +
+  geom_smooth(method="loess")
+species_plot +
+  xlab("Day of the Year") +
+  ylab("Stage")+
+  ylim(1,4)
+```
+
+```{r}
+#same plot as above but using different colors than the ones that match with the colors I've assigned for each pehnostage 
+
+species_plot <- ggplot(species, aes(x=doy, y=parabola, color=Species, fill=Species)) +
+  scale_fill_manual(values=c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#D55E00", "#CC79A7"))+scale_colour_manual(values=c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#D55E00", "#CC79A7"))+
+  geom_jitter(height = .2) +
+  geom_smooth(method="loess")
+species_plot +
+  xlab("Day of the Year") +
+  ylab("Stage") +
+  ylim(1,4)
+
+```
+
+```{r}
+species_plot <- ggplot(species, aes(x=doy, y=parabola, color=Species, fill=Species)) +
+  scale_fill_manual(values=c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#D55E00", "#CC79A7"))+scale_colour_manual(values=c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#D55E00", "#CC79A7"))+
+  geom_jitter(height = .2) +
+  geom_smooth(method="loess", se=FALSE)
+species_plot +
+  xlab("Day of the Year") +
+  ylab("Stage") +
+  ylim(1,4)
+```
+
+##Native vs Non-Native
+```{r}
+natives<- subset(species, species$Native_Type=="native")
+
+
+natives_plot <- ggplot(natives, aes(x=doy, y=parabola, color=Species, fill=Species)) +
+  scale_fill_manual(values=c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#D55E00", "#CC79A7"))+scale_colour_manual(values=c("#000000", "#E69F00",  "#009E73", "#F0E442", "#D55E00", "#CC79A7"))+
+  geom_jitter(height = .2) +
+  geom_smooth(method="loess", se=FALSE)
+natives_plot +
+  xlab("Day of the Year") +
+  ylab("Stage")+ ylim(1,4)
+```
+
+```{r}
+exotic<- subset(species, species$Native_Type=="non-native")
+
+exotic_plot <- ggplot(exotic, aes(x=doy, y=parabola, color=Species, fill=Species)) +
+  scale_fill_manual(values=c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#D55E00", "#CC79A7"))+scale_colour_manual(values=c( "#56B4E9", "#F0E442", "#D55E00", "#CC79A7"))+
+  geom_jitter(height = .2) +
+  geom_smooth(method="loess", se=FALSE)
+exotic_plot +
+  xlab("Day of the Year") +
+  ylab("Stage")+ylim(1,4)
+```
+
+##Family Comparisons
+```{r}
+Aster<- subset(species, species$Species=="Trailing African Daisy " | species$Species=="California Brittlebush")
+
+Aster_plot <- ggplot(Aster, aes(x=doy, y=parabola, color=Species, fill=Species)) +
+  scale_fill_manual(values=c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#D55E00", "#CC79A7"))+scale_colour_manual(values=c("#000000",  "#D55E00", "#CC79A7"))+
+  geom_jitter(height = .2) +
+  geom_smooth(method="loess", se=FALSE)
+Aster_plot +
+  xlab("Day of the Year") +
+  ylab("Stage")+ylim(1,4)
+
+```
+
+```{r}
+A_card<- subset(species, species$Species=="Indian Hawthorn" | species$Species=="Lemonade Berry")
+
+A_card_plot <- ggplot(A_card, aes(x=doy, y=parabola, color=Species, fill=Species)) +
+  scale_fill_manual(values=c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#D55E00", "#CC79A7"))+scale_colour_manual(values=c( "#56B4E9", "#009E73", "#F0E442", "#D55E00", "#CC79A7"))+
+  geom_jitter(height = .2) +
+  geom_smooth(method="loess", se=FALSE)
+A_card_plot +
+  xlab("Day of the Year") +
+  ylab("Stage")+ylim(1,4)
+```
+
+
+
+##Shub vs herb
+```{r}
+wood<- subset(species, species$Stem_Type=="wood")
+
+wood_plot <- ggplot(wood, aes(x=doy, y=parabola, color=Species, fill=Species)) +
+  scale_fill_manual(values=c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#D55E00", "#CC79A7"))+scale_colour_manual(values=c( "#56B4E9", "#009E73", "#F0E442", "#D55E00", "#CC79A7"))+
+  geom_jitter(height = .2) +
+  geom_smooth(method="loess", se=FALSE)
+wood_plot +
+  xlab("Day of the Year") +
+  ylab("Stage")+ylim(1,4)
+```
+
+```{r}
+herb<- subset(species, species$Stem_Type=="herbacious")
+
+herb_plot <- ggplot(herb, aes(x=doy, y=parabola, color=Species, fill=Species)) +
+  scale_fill_manual(values=c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#D55E00", "#CC79A7"))+scale_colour_manual(values=c("#000000", "#E69F00",  "#D55E00", "#CC79A7"))+
+  geom_jitter(height = .2) +
+  geom_smooth(method="loess", se=FALSE)
+herb_plot +
+  xlab("Day of the Year") +
+  ylab("Stage")+ylim(1,4)
+
+```
+
+
+
+##ANOVAs
+```{r}
+peak<- subset(species, species$Phenostage=="4")
+natives_aov <- subset(peak, peak$Native_Type=="native")
+exotic_aov <- subset(peak, peak$Native_Type=="non-native")
+```
+
+```{r}
+ggplot(peak, aes(x=Species, y=doy, fill=Species)) +
+  geom_boxplot()+
+  scale_fill_manual(values=c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#D55E00", "#CC79A7") )+
+  ylab("Day of the Year") + theme(legend.position="bottom") 
+```
+
+```{r}
+res.aov <- aov(doy ~ Species, data = peak)
+summary(res.aov)
+```
+
+```{r}
+TukeyHSD(res.aov)
+```
+```{r}
+res.aov_native <- aov(doy ~ Species, data = natives_aov)
+summary(res.aov_native)
+```
+```{r}
+res.aov_exotic <- aov(doy ~ Species, data = exotic_aov)
+summary(res.aov_exotic)
+```
+
+```{r}
+Aster_aov<- subset(peak, peak$Species=="Trailing African Daisy " | peak$Species=="California Brittlebush")
+A_card_aov<- subset(peak, peak$Species=="Indian Hawthorn" | peak$Species=="Lemonade Berry")
+```
+
+```{r}
+res.aov_aster <- aov(doy ~ Species, data = Aster_aov)
+summary(res.aov_aster)
+```
+
+```{r}
+res.aov_card <- aov(doy ~ Species, data = A_card_aov)
+summary(res.aov_card)
+```
+
+```{r}
+res.aov_wtf <- aov(doy ~ Native_Type, data = peak)
+summary(res.aov_wtf)
+```
+
+
+
+
+
+

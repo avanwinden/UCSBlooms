@@ -1,0 +1,98 @@
+---
+title: "Citizen Science"
+author: "Angela van Winden"
+date: "2/9/2020"
+output: html_document
+---
+
+```{r}
+all<- read.csv("all.csv")
+library(ggplot2)
+library(lubridate)
+library(dplyr)
+all$day <- as.Date(all$observed_on, "%m/%d/%y")
+```
+
+```{r}
+#histograms using base R and ggplot2 of every observation taken for the project
+hist(all$day,"months", freq = TRUE, xlab="Date of Observation", ylab="Number of Observations", main = "UCSBlooms Observations")
+
+Everything<-ggplot(data=all, aes(x=day) )+
+  geom_histogram(position = "stack",bins=12, color="black", fill="yellowgreen")
+Everything + xlab("Date") + ylab("Number of Observations")
+
+```
+
+```{r}
+#This is a histogram of every oberservation taken during a BioBlitz 
+BioBlitz<- subset(all,all$day=="2019-05-05" | all$day=="2019-04-06" | all$day=="2020-02-09" | all$day=="2020-01-11" | all$day=="2019-10-19" | all$day=="2019-06-07" | all$day=="2019-11-16" | all$day=="2020-03-07")
+
+hist(BioBlitz$day, "months", freq = TRUE, xlab="Date")
+
+Blitz<-ggplot(data=BioBlitz, aes(x=day) )+
+  geom_histogram(position = "stack", color="black", fill="green")
+Blitz + xlab("Date") +ylab("Number of Observations")+
+  ylim (0,500)
+```
+
+```{r}
+
+month<- subset(all, !(all$day=="2019-05-05" | all$day=="2019-04-06" | all$day=="2020-02-09" | all$day=="2020-01-11" | all$day=="2019-10-19" | all$day=="2019-06-07" | all$day=="2019-11-16"| all$day =="2020-03-07")) 
+
+regular<-ggplot(data=month, aes(x=day) )+
+  geom_histogram(position = "stack", color="black", fill="yellow")
+regular + xlab("Date") +ylab("Number of Observations") +
+  ylim(0,500)
+```
+
+
+##How many are Involved and When?
+```{r}
+count(distinct(all, user_id)) #number of observers in the project
+count(distinct(BioBlitz, user_id)) #number of observers in at least one bioblitz
+count(distinct(month, user_id)) #number of observers at least once outside of a biobllitz 
+```
+```{r}
+maybio<- subset(all,all$day=="2019-05-05")
+aprbio<- subset(all, all$day=="2019-04-06")
+febbio<-subset(all, all$day=="2020-02-09")
+janbio<-subset(all, all$day=="2020-01-11") 
+octbio<-subset(all,all$day=="2019-10-19")
+junbio<-subset(all,all$day=="2019-06-07")
+novbio<-subset(all,all$day=="2019-11-16")
+marbio<-subset(all, all$day=="2020-03-07")
+```
+```{r} 
+#individual bioblitz number of participants
+count(distinct(aprbio, user_id))
+count(distinct(maybio, user_id))
+count(distinct(junbio, user_id))
+count(distinct(octbio,user_id))
+count(distinct(novbio,user_id))
+count(distinct(janbio,user_id))
+count(distinct(febbio, user_id))
+count(distinct(marbio, user_id))
+#maybe to get the month participants data it might just be easier to go look at it in iNat. 
+```
+
+
+```{r}
+count(distinct(BioBlitz, user_id))
+count(distinct(month, user_id))
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

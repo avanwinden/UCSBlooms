@@ -1,0 +1,107 @@
+---
+title: "Bush"
+author: "Angela van Winden"
+date: "2/25/2020"
+output: html_document
+---
+
+```{r}
+bush1 <- read.csv("Encelia californica.csv")
+library(zoo)
+library(ggplot2)
+library(lubridate)
+#setting up the date columns to function correctly
+bush1$day <- as.Date(bush1$Date, "%m/%d/%y")
+bush1$doy <- yday(bush1$day)
+#need to remove data that hasn't been asssed or after 2/4 entrily 
+bush<- subset(bush1, bush1$day <"2020-04-19")
+```
+
+```{r}
+bush$parabola<- bush$Phenostage
+bush$parabola<-as.character(bush$parabola)
+bush$parabola[bush$parabola=="7"] <- "1"
+bush$parabola[bush$parabola=="6"]<-"2"
+bush$parabola[bush$parabola=="5"]<-"3"
+bush$parabola<- as.numeric(bush$parabola)
+
+
+bush$Phenostage <- as.factor(bush$Phenostage)
+hist1_bush<-ggplot(data=bush, aes(x=day, fill=Phenostage)) +
+  geom_histogram(position = "stack")
+hist1_bush+
+  ylab("Count")+
+  xlab("Date of Observation") +
+  scale_fill_discrete(name="Phenostage",
+                         breaks=c("1", "2", "3","4","5","6","7"),
+                         labels=c("Not in Bloom", "Buds", 
+                                  "Leading Bloom", "Full Bloom",
+                                  "Trailing Bloom", "Very Trailing Bloom", "Seeds/Fruit/Not in Bloom"))
+
+#When bin = 12, the observations are grouped by approx 30 days ~ 1 month of data
+
+hist2_bush<-ggplot(data=bush, aes(x=day, fill=Phenostage)) +
+  geom_histogram(position = "stack", bins = 12)
+hist2_bush +
+  ylab("Number of Observations")+
+  xlab("Date of Observation") +
+  scale_fill_discrete(name="Phenostage",
+                         breaks=c("1", "2", "3","4","5","6","7"),
+                         labels=c("Not in Bloom", "Buds", 
+                                  "Leading Bloom", "Full Bloom",
+                                  "Trailing Bloom", "Very Trailing Bloom", "Seeds/Fruit/Not in Bloom"))
+
+hist3_bush<-ggplot(data=bush, aes(x=day, fill=Phenostage)) +
+  geom_histogram(position = "fill", bins = 12)
+hist3_bush +
+  ylab("Number of Observations")+
+  xlab("Date of Observation") +
+  scale_fill_discrete(name="Phenostage",
+                         breaks=c("1", "2", "3","4","5","6","7"),
+                         labels=c("Not in Bloom", "Buds", 
+                                  "Leading Bloom", "Full Bloom",
+                                  "Trailing Bloom", "Very Trailing Bloom", "Seeds/Fruit/Not in Bloom"))
+
+```
+
+```{r}
+bush_plot2 <- ggplot(bush, aes(x=day, y=parabola)) +
+  geom_point() +
+  geom_smooth(method="loess")
+bush_plot2 +
+  xlab("Date of Observation") +
+  ylab("Stage")
+
+#Like the bar graphs to show the relative number of observations. But like the graph as a visual representation. Tyring to combine the two. But does this jitter too much?
+bush_plot3 <- ggplot(bush, aes(x=day, y=parabola)) +
+  geom_point(position = "jitter") +
+  geom_smooth(method="loess")
+bush_plot3 +
+  xlab("Date of Observation") +
+  ylab("Stage")
+
+
+#specifiy height of jitter instaed of deafult keeps the points closer together and emphazies the discretness more. a smaller height would get it even tighter but already losing some points to overlapping. I think I like this one the best :) 
+bush_plot4 <- ggplot(bush, aes(x=doy, y=parabola)) +
+  geom_jitter(height = .2) +
+  geom_smooth(method="loess")
+bush_plot4 +
+  xlab("Day of the Year") +
+  ylab("Stage") +ylim(1,4)
+
+```
+
+#Quantitative 
+
+###First Occurance
+```{r}
+bush6<-bush[with(bush, order(doy)),]
+bush6[match(unique(bush6$Phenostage), bush6$Phenostage),]
+```
+###Last Occurance 
+```{r}
+#now ordering the data frame backwards
+bush7<-bush[with(bush, order(-doy)),]
+#finding the first match of this data fram would be the last in doy occurance 
+bush7[match(unique(bush7$Phenostage),bush7$Phenostage),]
+```

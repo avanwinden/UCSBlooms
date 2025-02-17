@@ -1,0 +1,151 @@
+---
+title: "CA Poppy"
+author: "Angela van Winden"
+date: "4/15/2020"
+output: html_document
+---
+
+```{r}
+ca1<-read.csv("Eschscholiza californica.csv")
+library(zoo)
+library(ggplot2)
+library(lubridate)
+#setting up the date columns to function correctly
+ca1$day <- as.Date(ca1$Date, "%m/%d/%y")
+ca1$doy <- yday(ca1$day)
+#need to remove data that hasn't been asssed 
+ca<- subset(ca1, ca1$day <"2020-04-19")
+```
+
+##How Many Observations?
+```{r}
+plot(Phenostage~day, data=ca, xlab="Date")
+plot(jitter(Phenostage)~day, data=ca, xlab="Date of Observation", ylab="Phenostage")
+
+hist(ca$day, "months", freq = TRUE, xlab="Date of Observation", ylab="Number of Observations", main = "ca Observations")
+```
+
+
+##When phenostages Occur
+```{r}
+ca$Phenostage <- as.factor(ca$Phenostage)
+hist1_ca<-ggplot(data=ca, aes(x=day, fill=Phenostage)) +
+  geom_histogram(position = "stack")
+hist1_ca+
+  ylab("Count")+
+  xlab("Date of Observation") +
+  scale_fill_discrete(name="Phenostage",
+                         breaks=c("1", "2", "3","4","5","6","7"),
+                         labels=c("Not in Bloom", "Buds", 
+                                  "Leading Bloom", "Full Bloom",
+                                  "Trailing Bloom", "Very Trailing Bloom", "Seeds/Fruit/Not in Bloom"))
+
+#When bin = 12, the observations are grouped by approx 30 days ~ 1 month of data
+
+hist2_ca<-ggplot(data=ca, aes(x=day, fill=Phenostage)) +
+  geom_histogram(position = "stack", bins = 12)
+hist2_ca +
+  ylab("Number of Observations")+
+  xlab("Date of Observation") +
+  scale_fill_discrete(name="Phenostage",
+                         breaks=c("1", "2", "3","4","5","6","7"),
+                         labels=c("Not in Bloom", "Buds", 
+                                  "Leading Bloom", "Full Bloom",
+                                  "Trailing Bloom", "Very Trailing Bloom", "Seeds/Fruit/Not in Bloom"))
+
+hist3_ca<-ggplot(data=ca, aes(x=day, fill=Phenostage)) +
+  geom_histogram(position = "fill", bins = 12)
+hist3_ca +
+  ylab("Number of Observations")+
+  xlab("Date of Observation") +
+  scale_fill_discrete(name="Phenostage",
+                         breaks=c("1", "2", "3","4","5","6","7"),
+                         labels=c("Not in Bloom", "Buds", 
+                                  "Leading Bloom", "Full Bloom",
+                                  "Trailing Bloom", "Very Trailing Bloom", "Seeds/Fruit/Not in Bloom"))
+
+
+```
+
+###Measuring Distance from full bloom
+```{r}
+##setting up the phenostage observations to decrease after a max of 4
+ca$parabola<- ca$Phenostage
+ca$parabola<-as.character(ca$parabola)
+ca$parabola[ca$parabola=="7"] <- "1"
+ca$parabola[ca$parabola=="6"]<-"2"
+ca$parabola[ca$parabola=="5"]<-"3"
+ca$parabola<- as.numeric(ca$parabola)
+```
+
+```{r}
+ca_plot2 <- ggplot(ca, aes(x=day, y=parabola)) +
+  geom_point() +
+  geom_smooth(method="loess")
+ca_plot2 +
+  xlab("Date of Observation") +
+  ylab("Stage")
+
+#Like the bar graphs to show the relative number of observations. But like the graph as a visual representation. Tyring to combine the two. But does this jitter too much?
+ca_plot3 <- ggplot(ca, aes(x=day, y=parabola)) +
+  geom_point(position = "jitter") +
+  geom_smooth(method="loess")
+ca_plot3 +
+  xlab("Date of Observation") +
+  ylab("Stage")
+
+
+#specifiy height of jitter instaed of deafult keeps the points closer together and emphazies the discretness more. a smaller height would get it even tighter but already losing some points to overlapping. I think I like this one the best :) 
+ca_plot4 <- ggplot(ca, aes(x=doy, y=parabola)) +
+  geom_jitter(height = .2) +
+  geom_smooth(method="loess")
+ca_plot4 +
+  xlab("Day of the year") +
+  ylab("Stage") + ylim(1,4)
+```
+
+
+##Quantitative Analysis
+
+###First Occurance 
+```{r}
+ca6<-ca[with(ca, order(doy)),]
+ca6[match(unique(ca6$Phenostage), ca6$Phenostage),]
+```
+###Last Occurance 
+```{r}
+#now ordering the data frame backwards
+ca7<-ca[with(ca, order(-doy)),]
+#finding the first match of this data fram would be the last in doy occurance 
+ca7[match(unique(ca7$Phenostage),ca7$Phenostage),]
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

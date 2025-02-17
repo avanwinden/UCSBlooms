@@ -1,0 +1,112 @@
+---
+title: "Hawth"
+author: "Angela van Winden"
+date: "2/22/2020"
+output: html_document
+---
+
+```{r}
+hawth1 <- read.csv("Rhaphiolepis indica.csv")
+library(zoo)
+library(ggplot2)
+library(lubridate)
+#setting up the date columns to function correctly
+hawth1$day <- as.Date(hawth1$Date, "%m/%d/%y")
+hawth1$doy <- yday(hawth1$day)
+#need to remove data that hasn't been asssed or after 2/4 entrily 
+hawth<- subset(hawth1, hawth1$day <"2020-04-19")
+```
+
+
+
+```{r}
+hawth$parabola<- hawth$Phenostage
+hawth$parabola<-as.character(hawth$parabola)
+hawth$parabola[hawth$parabola=="7"] <- "1"
+hawth$parabola[hawth$parabola=="6"]<-"2"
+hawth$parabola[hawth$parabola=="5"]<-"3"
+hawth$parabola<- as.numeric(hawth$parabola)
+
+
+hawth$Phenostage <- as.factor(hawth$Phenostage)
+hist1_hawth<-ggplot(data=hawth, aes(x=day, fill=Phenostage)) +
+  geom_histogram(position = "stack")
+hist1_hawth+
+  ylab("Count")+
+  xlab("Date of Observation") +
+  scale_fill_discrete(name="Phenostage",
+                         breaks=c("1", "2", "3","4","5","6","7"),
+                         labels=c("Not in Bloom", "Buds", 
+                                  "Leading Bloom", "Full Bloom",
+                                  "Trailing Bloom", "Very Trailing Bloom", "Seeds/Fruit/Not in Bloom"))
+
+#When bin = 12, the observations are grouped by approx 30 days ~ 1 month of data
+
+hist2_hawth<-ggplot(data=hawth, aes(x=day, fill=Phenostage)) +
+  geom_histogram(position = "stack", bins = 12)
+hist2_hawth +
+  ylab("Number of Observations")+
+  xlab("Date of Observation") +
+  scale_fill_discrete(name="Phenostage",
+                         breaks=c("1", "2", "3","4","5","6","7"),
+                         labels=c("Not in Bloom", "Buds", 
+                                  "Leading Bloom", "Full Bloom",
+                                  "Trailing Bloom", "Very Trailing Bloom", "Seeds/Fruit/Not in Bloom"))
+
+hist3_hawth<-ggplot(data=hawth, aes(x=day, fill=Phenostage)) +
+  geom_histogram(position = "fill", bins = 12)
+hist3_hawth +
+  ylab("Number of Observations")+
+  xlab("Date of Observation") +
+  scale_fill_discrete(name="Phenostage",
+                         breaks=c("1", "2", "3","4","5","6","7"),
+                         labels=c("Not in Bloom", "Buds", 
+                                  "Leading Bloom", "Full Bloom",
+                                  "Trailing Bloom", "Very Trailing Bloom", "Seeds/Fruit/Not in Bloom"))
+
+```
+
+```{r}
+hawth_plot2 <- ggplot(hawth, aes(x=day, y=parabola)) +
+  geom_point() +
+  geom_smooth(method="loess")
+hawth_plot2 +
+  xlab("Date of Observation") +
+  ylab("Stage")
+
+#Like the bar graphs to show the relative number of observations. But like the graph as a visual representation. Tyring to combine the two. But does this jitter too much?
+hawth_plot3 <- ggplot(hawth, aes(x=day, y=parabola)) +
+  geom_point(position = "jitter") +
+  geom_smooth(method="loess")
+hawth_plot3 +
+  xlab("Date of Observation") +
+  ylab("Stage")
+
+
+#specifiy height of jitter instaed of deafult keeps the points closer together and emphazies the discretness more. a smaller height would get it even tighter but already losing some points to overlapping. I think I like this one the best :) 
+hawth_plot4 <- ggplot(hawth, aes(x=doy, y=parabola)) +
+  geom_jitter(height = .2) +
+  geom_smooth(method="loess")
+hawth_plot4 +
+  xlab("Day of the Year") +
+  ylab("Stage") +ylim(1,4)
+
+```
+
+#Quantitative
+
+##First Occurance 
+```{r}
+hawth6<-hawth[with(hawth, order(doy)),]
+hawth6[match(unique(hawth6$Phenostage), hawth6$Phenostage),]
+```
+
+##Last Occurance 
+```{r}
+#now ordering the data frame backwards
+hawth7<-hawth[with(hawth, order(-doy)),]
+#finding the first match of this data fram would be the last in doy occurance 
+hawth7[match(unique(hawth7$Phenostage),hawth7$Phenostage),]
+```
+
+

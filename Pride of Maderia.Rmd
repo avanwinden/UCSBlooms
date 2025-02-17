@@ -1,0 +1,162 @@
+---
+title: "Pride of Maderia"
+author: "Angela van Winden"
+date: "1/8/2020"
+output:
+  pdf_document: default
+  html_document: default
+---
+###Loading Packages and Data Sheet
+```{r}
+pride1 <- read.csv("Echium candicans.csv")
+library(zoo)
+library(ggplot2)
+library(lubridate)
+#setting up the date columns to function correctly
+pride1$day <- as.Date(pride1$Date, "%m/%d/%y")
+pride1$doy <- yday(pride1$day)
+#need to remove data that hasn't been asssed or after 4/18 entrily (code was written for an earlier date now arbitraty line set to include all data)
+pride<- subset(pride1, pride1$day <"2020-04-19")
+```
+###How Many Observations?
+```{r}
+# just a little data visualizations but not not extremley telling about anything excpet for participation from the citizen scientists
+plot(Phenostage~day, data=pride, xlab="Date")
+plot(jitter(Phenostage)~day, data=pride, xlab="Date of Observation", ylab="Phenostage")
+
+hist(pride$day, "months", freq = TRUE, xlab="Date of Observation", ylab="Number of Observations", main = "Pride Observations")
+```
+
+
+
+###Tracking When Phenostages Occur 
+```{r}
+pride_plot <- ggplot(pride, aes(x=doy, y=Phenostage)) +
+  geom_point() +
+  geom_smooth(method="loess")
+pride_plot +
+  xlab("Date of Observation")
+#okay but we've now encountered the problem where 7 and 1 are being averaged. Not actaully at a 5 phenostage at the end of the year. We are between 7 and 1.
+```
+
+
+```{r}
+pride$Phenostage <- as.factor(pride$Phenostage)
+hist1_pride<-ggplot(data=pride, aes(x=day, fill=Phenostage)) +
+  geom_histogram(position = "stack")
+hist1_pride+
+  ylab("Count")+
+  xlab("Date of Observation") +
+  scale_fill_discrete(name="Phenostage",
+                         breaks=c("1", "2", "3","4","5","6","7"),
+                         labels=c("Not in Bloom", "Buds", 
+                                  "Leading Bloom", "Full Bloom",
+                                  "Trailing Bloom", "Very Trailing Bloom", "Seeds/Fruit/Not in Bloom"))
+
+#When bin = 12, the observations are grouped by approx 30 days ~ 1 month of data
+
+hist2_pride<-ggplot(data=pride, aes(x=day, fill=Phenostage)) +
+  geom_histogram(position = "stack", bins = 12)
+hist2_pride +
+  ylab("Number of Observations")+
+  xlab("Date of Observation") +
+  scale_fill_discrete(name="Phenostage",
+                         breaks=c("1", "2", "3","4","5","6","7"),
+                         labels=c("Not in Bloom", "Buds", 
+                                  "Leading Bloom", "Full Bloom",
+                                  "Trailing Bloom", "Very Trailing Bloom", "Seeds/Fruit/Not in Bloom"))
+
+hist3_pride<-ggplot(data=pride, aes(x=day, fill=Phenostage)) +
+  geom_histogram(position = "fill", bins = 12)
+hist3_pride +
+  ylab("Number of Observations")+
+  xlab("Date of Observation") +
+  scale_fill_discrete(name="Phenostage",
+                         breaks=c("1", "2", "3","4","5","6","7"),
+                         labels=c("Not in Bloom", "Buds", 
+                                  "Leading Bloom", "Full Bloom",
+                                  "Trailing Bloom", "Very Trailing Bloom", "Seeds/Fruit/Not in Bloom"))
+
+```
+
+
+
+
+###Measuring Distance from "Full Bloom"
+
+```{r}
+##setting up the phenostage observations to decrease after a max of 4
+pride$parabola<- pride$Phenostage
+pride$parabola<-as.character(pride$parabola)
+pride$parabola[pride$parabola=="7"] <- "1"
+pride$parabola[pride$parabola=="6"]<-"2"
+pride$parabola[pride$parabola=="5"]<-"3"
+pride$parabola<- as.numeric(pride$parabola)
+```
+
+
+```{r}
+pride_plot2 <- ggplot(pride, aes(x=doy, y=parabola)) +
+  geom_point() +
+  geom_smooth(method="loess")
+pride_plot2 +
+  xlab("Date of Observation") +
+  ylab("Stage")
+
+#Like the bar graphs to show the relative number of observations. But like the graph as a visual representation. Tyring to combine the two. But does this jitter too much?
+pride_plot3 <- ggplot(pride, aes(x=doy, y=parabola)) +
+  geom_point(position = "jitter") +
+  geom_smooth(method="loess")
+pride_plot3 +
+  xlab("Date of Observation") +
+  ylab("Stage")
+
+
+#specifiy height of jitter instaed of deafult keeps the points closer together and emphazies the discretness more. a smaller height would get it even tighter but already losing some points to overlapping. I think I like this one the best :) 
+pride_plot4 <- ggplot(pride, aes(x=doy, y=parabola)) +
+  geom_jitter(height = .2) +
+  geom_smooth(method="loess")
+pride_plot4 +
+  xlab("Day of the Year") +
+  ylab("Stage") + ylim(1,4)
+```
+
+Will be interesting to see if I can get this figure to overlap with the other species so a comparison of patterns will be perfectly clear 
+
+
+
+
+```{r}
+pride$parabola<-as.character(pride$parabola)
+hist4_pride<-ggplot(data=pride, aes(x=day, fill=parabola)) +
+  geom_histogram(position = "stack", bins = "12")
+
+
+hist4_pride +
+  ylab("Number of Observations")+
+  xlab("Date of Observation") +
+  scale_fill_discrete(name="Phenostage",
+                         breaks=c("1", "2", "3","4"),
+                         labels=c("Not in Bloom", "Buds & Very Trailing Bloom", "Leading Bloom & Trailing Bloom", "Full Bloom"))
+```
+
+###Quantitative Analysis
+
+#####First Occurance of Phenostages 
+```{r}
+
+# once all of the data has been assesed need to jump back to chucnk 1 and remove condition of date for including into the analysis
+#data set needs to be soreted by date first for this to work. The data set needs to be sorted by DOY. Because I want to know when it is happening annually not just in a specific year when did i see each. 
+pride6<-pride[with(pride, order(doy)),]
+pride6[match(unique(pride6$Phenostage), pride6$Phenostage),]
+
+```
+
+####Last Occurance of Phenostages 
+```{r}
+#now ordering the data frame backwards
+pride7<-pride[with(pride, order(-doy)),]
+#finding the first match of this data fram would be the last in doy occurance 
+pride7[match(unique(pride7$Phenostage),pride7$Phenostage),]
+```
+

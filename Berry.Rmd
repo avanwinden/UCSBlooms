@@ -1,0 +1,108 @@
+---
+title: "Berry"
+author: "Angela van Winden"
+date: "2/21/2020"
+output: html_document
+---
+
+##load data and packages
+```{r}
+berry1 <- read.csv("Rhus integrifolia.csv")
+library(zoo)
+library(ggplot2)
+library(lubridate)
+#setting up the date columns to function correctly
+berry1$day <- as.Date(berry1$Date, "%m/%d/%y")
+berry1$doy <- yday(berry1$day)
+#need to remove data that hasn't been asssed
+berry<- subset(berry1, berry1$day <"2020-04-19")
+```
+
+```{r}
+berry$parabola<- berry$Phenostage
+berry$parabola<-as.character(berry$parabola)
+berry$parabola[berry$parabola=="7"] <- "1"
+berry$parabola[berry$parabola=="6"]<-"2"
+berry$parabola[berry$parabola=="5"]<-"3"
+berry$parabola<- as.numeric(berry$parabola)
+
+
+berry$Phenostage <- as.factor(berry$Phenostage)
+hist1_berry<-ggplot(data=berry, aes(x=day, fill=Phenostage)) +
+  geom_histogram(position = "stack")
+hist1_berry+
+  ylab("Count")+
+  xlab("Date of Observation") +
+  scale_fill_discrete(name="Phenostage",
+                         breaks=c("1", "2", "3","4","5","6","7"),
+                         labels=c("Not in Bloom", "Buds", 
+                                  "Leading Bloom", "Full Bloom",
+                                  "Trailing Bloom", "Very Trailing Bloom", "Seeds/Fruit/Not in Bloom"))
+
+#When bin = 12, the observations are grouped by approx 30 days ~ 1 month of data
+
+hist2_berry<-ggplot(data=berry, aes(x=day, fill=Phenostage)) +
+  geom_histogram(position = "stack", bins = 12)
+hist2_berry +
+  ylab("Number of Observations")+
+  xlab("Date of Observation") +
+  scale_fill_discrete(name="Phenostage",
+                         breaks=c("1", "2", "3","4","5","6","7"),
+                         labels=c("Not in Bloom", "Buds", 
+                                  "Leading Bloom", "Full Bloom",
+                                  "Trailing Bloom", "Very Trailing Bloom", "Seeds/Fruit/Not in Bloom"))
+
+hist3_berry<-ggplot(data=berry, aes(x=day, fill=Phenostage)) +
+  geom_histogram(position = "fill", bins = 12)
+hist3_berry +
+  ylab("Number of Observations")+
+  xlab("Date of Observation") +
+  scale_fill_discrete(name="Phenostage",
+                         breaks=c("1", "2", "3","4","5","6","7"),
+                         labels=c("Not in Bloom", "Buds", 
+                                  "Leading Bloom", "Full Bloom",
+                                  "Trailing Bloom", "Very Trailing Bloom", "Seeds/Fruit/Not in Bloom"))
+
+```
+
+```{r}
+berry_plot2 <- ggplot(berry, aes(x=day, y=parabola)) +
+  geom_point() +
+  geom_smooth(method="loess")
+berry_plot2 +
+  xlab("Date of Observation") +
+  ylab("Stage")
+
+#Like the bar graphs to show the relative number of observations. But like the graph as a visual representation. Tyring to combine the two. But does this jitter too much?
+berry_plot3 <- ggplot(berry, aes(x=day, y=parabola)) +
+  geom_point(position = "jitter") +
+  geom_smooth(method="loess")
+berry_plot3 +
+  xlab("Date of Observation") +
+  ylab("Stage")
+
+
+#specifiy height of jitter instaed of deafult keeps the points closer together and emphazies the discretness more. a smaller height would get it even tighter but already losing some points to overlapping. I think I like this one the best :) 
+berry_plot4 <- ggplot(berry, aes(x=doy, y=parabola)) +
+  geom_jitter(height = .2) +
+  geom_smooth(method="loess")
+berry_plot4 +
+  xlab("Day of the Year") +
+  ylab("Stage") +ylim(1,4)
+
+```
+
+#Quantitative Analysis 
+
+##First Occurance 
+```{r}
+berry6<-berry[with(berry, order(doy)),]
+berry6[match(unique(berry6$Phenostage), berry6$Phenostage),]
+```
+##last occurance 
+```{r}
+#now ordering the data frame backwards
+berry7<-berry[with(berry, order(-doy)),]
+#finding the first match of this data fram would be the last in doy occurance 
+berry7[match(unique(berry7$Phenostage),berry7$Phenostage),]
+```

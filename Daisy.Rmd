@@ -1,0 +1,110 @@
+---
+title: "Daisy"
+author: "Angela van Winden"
+date: "2/25/2020"
+output: html_document
+---
+
+```{r}
+dasiy1 <- read.csv("Dimorphotheca fruticosa.csv")
+library(zoo)
+library(ggplot2)
+library(lubridate)
+#setting up the date columns to function correctly
+dasiy1$day <- as.Date(dasiy1$Date, "%m/%d/%y")
+dasiy1$doy <- yday(dasiy1$day)
+#need to remove data that hasn't been asssed 
+dasiy<- subset(dasiy1, dasiy1$day <"2020-04-19")
+```
+
+```{r}
+dasiy$parabola<- dasiy$Phenostage
+dasiy$parabola<-as.character(dasiy$parabola)
+dasiy$parabola[dasiy$parabola=="7"] <- "1"
+dasiy$parabola[dasiy$parabola=="6"]<-"2"
+dasiy$parabola[dasiy$parabola=="5"]<-"3"
+dasiy$parabola<- as.numeric(dasiy$parabola)
+
+
+dasiy$Phenostage <- as.factor(dasiy$Phenostage)
+hist1_dasiy<-ggplot(data=dasiy, aes(x=day, fill=Phenostage)) +
+  geom_histogram(position = "stack")
+hist1_dasiy+
+  ylab("Count")+
+  xlab("Date of Observation") +
+  scale_fill_discrete(name="Phenostage",
+                         breaks=c("1", "2", "3","4","5","6","7"),
+                         labels=c("Not in Bloom", "Buds", 
+                                  "Leading Bloom", "Full Bloom",
+                                  "Trailing Bloom", "Very Trailing Bloom", "Seeds/Fruit/Not in Bloom"))
+
+#When bin = 12, the observations are grouped by approx 30 days ~ 1 month of data
+
+hist2_dasiy<-ggplot(data=dasiy, aes(x=day, fill=Phenostage)) +
+  geom_histogram(position = "stack", bins = 12)
+hist2_dasiy +
+  ylab("Number of Observations")+
+  xlab("Date of Observation") +
+  scale_fill_discrete(name="Phenostage",
+                         breaks=c("1", "2", "3","4","5","6","7"),
+                         labels=c("Not in Bloom", "Buds", 
+                                  "Leading Bloom", "Full Bloom",
+                                  "Trailing Bloom", "Very Trailing Bloom", "Seeds/Fruit/Not in Bloom"))
+
+hist3_dasiy<-ggplot(data=dasiy, aes(x=day, fill=Phenostage)) +
+  geom_histogram(position = "fill", bins = 12)
+hist3_dasiy +
+  ylab("Number of Observations")+
+  xlab("Date of Observation") +
+  scale_fill_discrete(name="Phenostage",
+                         breaks=c("1", "2", "3","4","5","6","7"),
+                         labels=c("Not in Bloom", "Buds", 
+                                  "Leading Bloom", "Full Bloom",
+                                  "Trailing Bloom", "Very Trailing Bloom", "Seeds/Fruit/Not in Bloom"))
+
+```
+
+```{r}
+dasiy_plot2 <- ggplot(dasiy, aes(x=day, y=parabola)) +
+  geom_point() +
+  geom_smooth(method="loess")
+dasiy_plot2 +
+  xlab("Date of Observation") +
+  ylab("Stage")
+
+#Like the bar graphs to show the relative number of observations. But like the graph as a visual representation. Tyring to combine the two. But does this jitter too much?
+dasiy_plot3 <- ggplot(dasiy, aes(x=day, y=parabola)) +
+  geom_point(position = "jitter") +
+  geom_smooth(method="loess")
+dasiy_plot3 +
+  xlab("Date of Observation") +
+  ylab("Stage")
+
+
+#specifiy height of jitter instaed of deafult keeps the points closer together and emphazies the discretness more. a smaller height would get it even tighter but already losing some points to overlapping. I think I like this one the best :) 
+dasiy_plot4 <- ggplot(dasiy, aes(x=doy, y=parabola)) +
+  geom_jitter(height = .2) +
+  geom_smooth(method="loess")
+dasiy_plot4 +
+  xlab("Day of the Year") +
+  ylab("Stage") +ylim(1,4)
+
+```
+
+#Quantitative Analysis 
+
+##First Occurance
+```{r}
+dasiy6<-dasiy[with(dasiy, order(doy)),]
+dasiy6[match(unique(dasiy6$Phenostage), dasiy6$Phenostage),]
+```
+##Last Occurance 
+```{r}
+#now ordering the data frame backwards
+dasiy7<-dasiy[with(dasiy, order(-doy)),]
+#finding the first match of this data fram would be the last in doy occurance 
+dasiy7[match(unique(dasiy7$Phenostage),dasiy7$Phenostage),]
+```
+
+
+
