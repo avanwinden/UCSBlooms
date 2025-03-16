@@ -69,7 +69,7 @@ blooms<-data.frame(In_Bloom=c(128,138,119,110,43,162),total=c(149,262,162,285,85
                    percent=c(85.90,52.67,73.46,38.60,50.59,84.82), 
                    row.names = c("Poppy","Hawthorn","Brittlebush","Pride","Berry","Daisy"))
 percent_bloom<-c(85.90,52.67,73.46,38.60,50.59,84.82)
-t<-chisq.test(percent) #i dont think thisis correct
+t<-chisq.test(percent) #i dont think this is correct
 
 ## any effects of the pandemic to explore?
 
