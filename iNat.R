@@ -46,4 +46,32 @@ year_SubProjects %>% ggplot(aes(x=month,y=observations,fill=bioblitz))+
   geom_col(position = "stack")
 
 
+## did species counts go down? did observers knowing the focal species change anything?
+
+## number of observations in bloom vs not in bloom?
+Phenostages<-read.csv("Species with Phenostage.csv")
+flowers<-Phenostages%>%filter(Phenostage!="2",Phenostage!="1",Phenostage!="7")
+poppy<-Phenostages%>%filter(Species=="California Poppy")
+poppy_flowers<-poppy%>%filter(Phenostage!="2",Phenostage!="1",Phenostage!="7")
+hawthorn<-Phenostages%>%filter(Species=="Indian Hawthorn")
+hawthorn_flowers<-hawthorn%>%filter(Phenostage!="2",Phenostage!="1",Phenostage!="7")
+brittlebush<-Phenostages%>%filter(Species=="California Brittlebush")
+brittlebush_flowers<-brittlebush%>%filter(Phenostage!="2",Phenostage!="1",Phenostage!="7")
+pride<-Phenostages%>%filter(Species=="Pride of Madeira")
+pride_flowers<-pride%>%filter(Phenostage!="2",Phenostage!="1",Phenostage!="7")
+berry<-Phenostages%>%filter(Species=="Lemonade Berry")
+berry_flowers<-berry%>%filter(Phenostage!="2",Phenostage!="1",Phenostage!="7")
+daisy<-Phenostages%>%filter(Species=="Trailing African Daisy ")
+daisy_flowers<-daisy%>%filter(Phenostage!="2",Phenostage!="1",Phenostage!="7")
+# worth running a test 
+#run a statistical tests for all 6 species? is the amount of bloom of poppy differnet than the others?
+blooms<-data.frame(In_Bloom=c(128,138,119,110,43,162),total=c(149,262,162,285,85,191),
+                   percent=c(85.90,52.67,73.46,38.60,50.59,84.82), 
+                   row.names = c("Poppy","Hawthorn","Brittlebush","Pride","Berry","Daisy"))
+percent_bloom<-c(85.90,52.67,73.46,38.60,50.59,84.82)
+t<-chisq.test(percent) #i dont think thisis correct
+
+## any effects of the pandemic to explore?
+
+
 
