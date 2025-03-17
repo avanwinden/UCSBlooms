@@ -58,8 +58,9 @@ arrows.circular(mean(Hawthorn_Observations))
 
 ##okay just looking at the means, the species all are more likely to be observed around the same dates
 # do want to see if I can get them all on one 
+#now the histogram is probably better for this but kinda intersting to see it plotted this way 
 
-plot.circular(Poppy_Observations, col="yellow", main ="When are observations Made", stack=TRUE, axes=FALSE)
+plot.circular(Poppy_Observations, col="yellow", main ="When Are Observations Made?", stack=TRUE, axes=FALSE)
 arrows.circular(mean(Poppy_Observations), col= "yellow")
 points(Pride_Observations, col = "red", stack=TRUE)
 arrows.circular(mean(Pride_Observations), col = "red")
@@ -72,7 +73,7 @@ arrows.circular(mean(Bush_Observations), col="orange")
 points(Berry_Observations, col="purple", stack=TRUE)
 arrows.circular(mean(Berry_Observations), col="purple")
 axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)), 
-              labels=c("90", "0", "270", "180"))
+              labels=c("doy 91", "doy 1 and 365", "doy 274", "doy 183"))
 
 watson.two.test(Poppy_Observations, Pride_Observations)
 watson.two.test(Poppy_Observations,Bush_Observations)
@@ -80,6 +81,8 @@ watson.two.test(Daisy_Observations,Berry_Observations)
 
 # looks like the species mean day of observation was signifcantly different, 
 #Even the two with the closest mean observed date is significant between the species
+
+# need to go look at if the mean is okay to use here or should I be doing the "r"
 
 
 
