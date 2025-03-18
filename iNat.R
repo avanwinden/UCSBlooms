@@ -50,6 +50,9 @@ year_SubProjects %>% ggplot(aes(x=month,y=observations,fill=bioblitz))+
 
 
 ## did species counts go down? did observers knowing the focal species change anything?
+year_Project %>% ggplot(aes(x=day,fill=common_name))+ 
+  geom_histogram() + labs(title = "All Observations by Species") + theme(legend.position="none")
+
 
 ## number of observations in bloom vs not in bloom? are citizen scientics more likely to observe in flower?
 Phenostages<-read.csv("Species with Phenostage.csv")
