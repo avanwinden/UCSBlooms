@@ -39,6 +39,9 @@ hist(Complete_Project$day, "month",freq = TRUE, xlab="Date of Observation",
      ylab="Number of Observations", main = "UCSBlooms Observations")
 hist(year_Project$day, "month",freq = TRUE, xlab="Date of Observation", 
      ylab="Number of Observations", main = "UCSBlooms Observations")
+hist(year_Project$day, "day",freq = TRUE, xlab="Date of Observation", 
+     ylab="Number of Observations", main = "UCSBlooms Observations")
+
 #graph separating type of observation
 Summary_SubProjects %>% ggplot(aes(x=month,y=observations,fill=bioblitz))+ 
   geom_col(position = "stack") 
@@ -48,7 +51,7 @@ year_SubProjects %>% ggplot(aes(x=month,y=observations,fill=bioblitz))+
 
 ## did species counts go down? did observers knowing the focal species change anything?
 
-## number of observations in bloom vs not in bloom?
+## number of observations in bloom vs not in bloom? are citizen scientics more likely to observe in flower?
 Phenostages<-read.csv("Species with Phenostage.csv")
 flowers<-Phenostages%>%filter(Phenostage!="2",Phenostage!="1",Phenostage!="7")
 poppy<-Phenostages%>%filter(Species=="California Poppy")
