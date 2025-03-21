@@ -46,19 +46,31 @@ prideYN_circ<-circular(PrideYN$doy.a, units = "degrees", template = "geographics
 
 mean.circular(berryYN_circ)
 rho.circular(berryYN_circ)
-
 mean.circular(bushYN_circ)
 rho.circular(bushYN_circ)
-
 mean.circular(daisyYN_circ)
 rho.circular(daisyYN_circ)
-
 mean.circular(hawthronYN_circ)
 rho.circular(hawthronYN_circ)
-
 mean.circular(poppyYN_circ)
 rho.circular(poppyYN_circ)
-
 mean.circular(prideYN_circ)
 rho.circular(prideYN_circ)
+
+# We are seeing differences between the mean date (center of condition) for any flowering vs peak flowering
+# really need to look into california brittlebush more. Big difference in mean day 
+# and obviously data is going to be more spread when looking at all flowering vs peak in general
+# however, poppy is now a lot closer to others in the group. Potentially peak looks 
+#different in poppy observations to the phenostage assigners. Might have something to do with denisty of patches?
+
+
+plot.circular(not_flowering_circ, col="red", main ="Not Flowering", stack=TRUE, axes=FALSE)
+arrows.circular(mean(not_flowering_circ), col= "red")
+# immediate looking just at the graph notice the mean is early in the year
+mean.circular(not_flowering_circ)
+rho.circular(not_flowering_circ)
+rayleigh.test(not_flowering_circ)
+# r value isn't extremely high so not all of the not flowering taken at same time but
+# but the p vaule is 0 for the rayleiigh test. SO not random when not flowering has been observed. 
+## well day 25 would actually be near the end of the project. before spring would be peak not flowering 
 
