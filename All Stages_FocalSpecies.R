@@ -24,9 +24,9 @@ Phenostages_plot <- ggplot(Phenostages, aes(x=doy, y=parabola, color=Species, fi
 Phenostages_plot +
   xlab("Day of the Year") +
   ylab("Stage")+
-  ylim(1,4)
+  ylim(1,4)+
 
-#SOMETHING IS WRONG HERE # unless is it true for focal speices, did the observations of focal go way up at the end of the project?
+
 Phenostages$Phenostage <- as.factor(Phenostages$Phenostage)
 hist1_pheno<-ggplot(data=Phenostages, aes(x=day, fill=Phenostage)) +
   geom_histogram(position = "stack")
@@ -39,6 +39,7 @@ hist1_pheno+
                                "Leading Bloom", "Full Bloom",
                                "Trailing Bloom", "Very Trailing Bloom", "Seeds/Fruit/Not in Bloom"))
 #day should be calculating for the date. Then why is all my observations showing in late march? we know the observations were strongest at the beginning of the project 
+# unless is it true for focal speices, did the observations of focal go way up at the end of the project? Yes look at iNat.R and Circular Observations.R
 
 
 all_plot <- ggplot(Phenostages, aes(x=doy, y=parabola)) +

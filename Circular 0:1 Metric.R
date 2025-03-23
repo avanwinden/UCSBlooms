@@ -58,7 +58,8 @@ mean.circular(prideYN_circ)
 rho.circular(prideYN_circ)
 
 # We are seeing differences between the mean date (center of condition) for any flowering vs peak flowering
-# really need to look into california brittlebush more. Big difference in mean day 
+# really need to look into california brittlebush more. Big difference in mean day
+# bush and poppy are the only two where the eman day is later. Look into that 
 # and obviously data is going to be more spread when looking at all flowering vs peak in general
 # however, poppy is now a lot closer to others in the group. Potentially peak looks 
 #different in poppy observations to the phenostage assigners. Might have something to do with denisty of patches?

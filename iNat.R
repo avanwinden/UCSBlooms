@@ -53,6 +53,18 @@ year_SubProjects %>% ggplot(aes(x=month,y=observations,fill=bioblitz))+
 year_Project %>% ggplot(aes(x=day,fill=common_name))+ 
   geom_histogram() + labs(title = "All Observations by Species") + theme(legend.position="none")
 
+focal_species_obs<-year_Project%>%filter(common_name=="trailing African daisy"| common_name=="Indian Hawthorn"|
+                                         common_name=="California brittlebush"| common_name=="lemonade berry"|
+                                         common_name=="Pride of Madeira"|common_name=="California poppy")
+
+focal_species_obs %>% ggplot(aes(x=day,fill=common_name))+ 
+  geom_histogram() + labs(title = "Focal Species Observations") + theme(legend.position="none")
+#I mean look at this! Absolutley the species observed changed shit 
+
+
+
+
+
 
 ## number of observations in bloom vs not in bloom? are citizen scientics more likely to observe in flower?
 Phenostages<-read.csv("Species with Phenostage.csv")
