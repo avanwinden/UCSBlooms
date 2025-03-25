@@ -26,6 +26,12 @@ Summary_GeoAll<-data.frame("observations"=12833,"observers"=572,"species"=1146)
 GeoSpecies<-data.frame("pride"=468,"brittlebush"=458,"hawthorn"=435,"poppy"=298,
                        "daisy"=288,"blue lily"=209,"lemonade berry"=179,"natal lily"=132)
 
+
+
+
+
+
+
 #OBSERVERS AND OBSERVATIONS
 #UCSBlooms Project - Vested Interest Observers Question
 PublicObservers<- Complete_Project %>% filter(user_login!="avanwinden",user_login!="taylorc",
@@ -42,11 +48,13 @@ hist(year_Project$day, "month",freq = TRUE, xlab="Date of Observation",
 hist(year_Project$day, "day",freq = TRUE, xlab="Date of Observation", 
      ylab="Number of Observations", main = "UCSBlooms Observations")
 
-#graph separating type of observation
+
+#graph separating type of observation BioBlitz vs Month
 Summary_SubProjects %>% ggplot(aes(x=month,y=observations,fill=bioblitz))+ 
   geom_col(position = "stack") 
 year_SubProjects %>% ggplot(aes(x=month,y=observations,fill=bioblitz))+ 
   geom_col(position = "stack")
+
 
 
 ## did species counts go down? did observers knowing the focal species change anything?
@@ -60,9 +68,13 @@ focal_species_obs<-year_Project%>%filter(common_name=="trailing African daisy"| 
 focal_species_obs %>% ggplot(aes(x=day,fill=common_name))+ 
   geom_histogram() + labs(title = "Focal Species Observations") + theme(legend.position="none")
 #I mean look at this! Absolutley the species observed changed shit 
-
-
-
+# a color coded historgarm 
+year_Project$focal<-ifelse(year_Project$common_name=="trailing African daisy"|
+                             year_Project$common_name=="Indian Hawthorn"|year_Project$common_name=="California brittlebush"|
+                             year_Project$common_name=="lemonade berry"|year_Project$common_name=="Pride of Madeira"|
+                             year_Project$common_name=="California poppy","focal","all")
+year_Project %>% ggplot(aes(x=day,fill=focal))+ 
+  geom_histogram() + labs(title = "Focus on focal species") + theme(legend.position="right")
 
 
 
