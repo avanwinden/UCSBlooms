@@ -98,7 +98,7 @@ arrows.circular(mean(pride_peak_circ), col="purple")}
 all_circ<-circular(Phenostages$doy.a, units="degrees", template="geographics")
 poop<-aov.circular(all_circ, Phenostages$Species)
 
-{#this is linear
+{#this is linear just trying to figure out why no posthoc test for circular data
 poopy<-aov(doy~Species, data=Phenostages)
 summary(poopy)
-TukeyHSD(poopy) #just trying to figure out why no posthoc test for circular data}
+TukeyHSD(poopy) }
