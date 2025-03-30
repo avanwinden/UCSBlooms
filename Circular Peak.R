@@ -3,6 +3,7 @@ library(knitr)
 library(ggplot2)
 library(lubridate)
 library(dplyr)
+library(patchwork)
 
 
 Phenostages<-read.csv("Species with Phenostage.csv")
@@ -43,7 +44,8 @@ rho.circular(pride_peak_circ)
 # r vector lengths indicate that the poppy has the widest spread of peak flowering days 
 #at r=.70 and next lowest r is 0.87 for the daisy 
 
-plot.circular(berry_peak_circ, col="yellow", main ="Peak Bloom", stack=TRUE, axes=FALSE)
+#This needs a legend I think
+{plot.circular(berry_peak_circ, col="yellow", main ="Peak Bloom", stack=TRUE, axes=FALSE,)
 arrows.circular(mean(berry_peak_circ), col= "yellow")
 points(bush_peak_circ, col = "red", stack=TRUE)
 arrows.circular(mean(bush_peak_circ), col = "red")
@@ -56,6 +58,47 @@ arrows.circular(mean(poppy_peak_circ), col="orange")
 points(pride_peak_circ, col="purple", stack=TRUE)
 arrows.circular(mean(pride_peak_circ), col="purple")
 axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)), 
-              labels=c("doy 91", "doy 1 and 365", "doy 274", "doy 183"))
+              labels=c("91", "365", "274", "183"))}
+
+
+
+
+#Rose Diagrams, bins of 75 would be about every 5 days #then do for all and print on one screen
+#would be nice to report the n and theta number here maybe? 
+{layout(matrix(c(1,2,3,4,5,6),3,2))
+  par(mar = c(1, .2, 1, .2))
+rose.diag(berry_peak_circ, bins = 75, main = "Berry Peak n=6", axes = FALSE, prop = 1)
+axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)), 
+              labels=c("91", "365", "274", "183"), cex = 0.5, tcl.text = -0.1 )
+arrows.circular(mean(berry_peak_circ), col= "yellow")
+rose.diag(bush_peak_circ, bins = 75, main = "Bush Peak n=21", axes = FALSE, prop = 1) 
+axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)), 
+              labels=c("91", "365", "274", "183"), cex = 0.5, tcl.text = -0.1 )
+arrows.circular(mean(bush_peak_circ), col = "red")
+rose.diag(daisy_peak_circ, bins = 75, main = "Daisy Peak n=46", axes = FALSE, prop = 1) 
+axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)), 
+              labels=c("91", "365", "274", "183"), cex = 0.5, tcl.text = -0.1 )
+arrows.circular(mean(daisy_peak_circ), col ="blue")
+rose.diag(hawthron_peak_circ, bins = 75, main = "Thorn Peak n=24", axes = FALSE, prop = 1) 
+axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)), 
+              labels=c("91", "365", "274", "183"), cex = 0.5, tcl.text = -0.1 )
+arrows.circular(mean(hawthron_peak_circ), col="green")
+rose.diag(poppy_peak_circ, bins = 75, main = "Poppy Peak n=60", axes = FALSE, prop = 1) 
+axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)), 
+              labels=c("91", "365", "274", "183"), cex = 0.5, tcl.text = -0.1 )
+arrows.circular(mean(poppy_peak_circ), col="orange")
+rose.diag(pride_peak_circ, bins = 75, main = "Pride Peak n=34", axes = FALSE, prop = 1) 
+axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)), 
+              labels=c("91", "365", "274", "183"), cex = 0.5, tcl.text = -0.1 )
+arrows.circular(mean(pride_peak_circ), col="purple")}
+
 
 # now need to test significant differences between the spread (r) and the mean angles 
+#Circular ANOVA
+all_circ<-circular(Phenostages$doy.a, units="degrees", template="geographics")
+poop<-aov.circular(all_circ, Phenostages$Species)
+
+{#this is linear
+poopy<-aov(doy~Species, data=Phenostages)
+summary(poopy)
+TukeyHSD(poopy) #just trying to figure out why no posthoc test for circular data}
