@@ -104,8 +104,3 @@ t<-chisq.test(percent) #i dont think this is correct
 ## any effects of the pandemic to explore?
 
 
-## FOCAL SPECIES INFLUENCE 
-#look at histogram of observations of species  taken to phenostage vs historgram of all obserservation 
-
-
-
