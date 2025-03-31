@@ -31,17 +31,23 @@ pride_peak_circ<-circular(pride_peak$doy.a, units = "degrees", template = "geogr
 
 mean.circular(berry_peak_circ)
 rho.circular(berry_peak_circ)
+rayleigh.test(berry_peak_circ)
 mean.circular(bush_peak_circ)
 rho.circular(bush_peak_circ)
+rayleigh.test(bush_peak_circ)
 mean.circular(daisy_peak_circ)
 rho.circular(daisy_peak_circ)
+rayleigh.test(daisy_peak_circ)
 mean.circular(hawthron_peak_circ)
 rho.circular(hawthron_peak_circ)
+rayleigh.test(hawthron_peak_circ)
 mean.circular(poppy_peak_circ)
 rho.circular(poppy_peak_circ)
+rayleigh.test(poppy_peak_circ)
 mean.circular(pride_peak_circ)
 rho.circular(pride_peak_circ)
-# r vector lengths indicate that the poppy has the widest spread of peak flowering days 
+rayleigh.test(pride_peak_circ)
+e# r vector lengths indicate that the poppy has the widest spread of peak flowering days 
 #at r=.70 and next lowest r is 0.87 for the daisy 
 
 #This needs a legend I think
@@ -93,12 +99,73 @@ axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)),
 arrows.circular(mean(pride_peak_circ), col="purple")}
 
 
-# now need to test significant differences between the spread (r) and the mean angles 
-#Circular ANOVA
-all_circ<-circular(Phenostages$doy.a, units="degrees", template="geographics")
-poop<-aov.circular(all_circ, Phenostages$Species)
+### now need to test significant differences between the spread (r) and the mean angles 
 
-{#this is linear just trying to figure out why no posthoc test for circular data
-poopy<-aov(doy~Species, data=Phenostages)
-summary(poopy)
-TukeyHSD(poopy) }
+#Watson Williams Test, then pairsewsie posthoc comparisons. Testing the means
+
+peak<-Phenostages%>%filter(Phenostage=="4")
+all_circ_peak<-circular(peak$doy.a, units="degrees", template="geographics")
+watson.williams.test(all_circ_peak,peak$Species)
+
+bush.thorn1<-peak%>%filter(Species=="California Brittlebush"|Species=="Indian Hawthorn")
+bush.thorn<-circular(bush.thorn1$doy.a, units = "degrees",template = "geographics")
+watson.williams.test(bush.thorn,bush.thorn1$Species)
+
+bush.berry1<-peak%>%filter(Species=="California Brittlebush"|Species=="Lemonade Berry")
+bush.berry<-circular(bush.berry1$doy.a, units = "degrees",template="geographics")
+watson.williams.test(bush.berry, bush.berry1$Species)
+
+berry.thorn1<-peak%>%filter(Species=="Lemonade Berry"|Species=="Indian Hawthorn")
+berry.thorn<-circular(berry.thorn1$doy.a, units = "degrees", template = "geographics")
+watson.williams.test(berry.thorn, berry.thorn1$Species)
+
+berry.poppy1<-peak%>%filter(Species=="Lemonade Berry"|Species=="California Poppy")
+berry.poppy<-circular(berry.poppy1$doy.a, units = "degrees", template = "geographics")
+watson.williams.test(berry.poppy,berry.poppy1$Species)
+
+berry.daisy1<-peak%>%filter(Species=="Lemonade Berry"|Species=="Trailing African Daisy ")
+berry.daisy<-circular(berry.daisy1$doy.a, units = "degrees", template = "geographics")
+watson.williams.test(berry.daisy, berry.daisy1$Species)
+
+berry.pride1<-peak%>%filter(Species=="Lemonade Berry"|Species=="Pride of Madeira")
+berry.pride<-circular(berry.pride1$doy.a, units = "degrees", template = "geographics")
+watson.williams.test(berry.pride, berry.pride1$Species)
+
+thorn.poppy1<-peak%>%filter(Species=="Indian Hawthorn"|Species=="California Poppy")
+thorn.poppy<-circular(thorn.poppy1$doy.a, units = "degrees", template = "geographics")
+watson.williams.test(thorn.poppy, thorn.poppy1$Species)
+
+thorn.daisy1<-peak%>%filter(Species=="Indian Hawthorn"|Species=="Trailing African Daisy ")
+thorn.daisy<-circular(thorn.daisy1$doy.a, units = "degrees", template = "geographics")
+watson.williams.test(thorn.daisy, thorn.daisy1$Species)
+
+thorn.pride1<-peak%>%filter(Species=="Indian Hawthorn"|Species=="Pride of Madeira")
+thorn.pride<-circular(thorn.pride1$doy.a, units = "degrees", template = "geographics")
+watson.williams.test(thorn.pride, thorn.pride1$Species)
+
+bush.poppy1<-peak%>%filter(Species=="California Brittlebush"|Species=="California Poppy")
+bush.poppy<-circular(bush.poppy1$doy.a, units = "degrees", template = "geographics")
+watson.williams.test(bush.poppy,bush.poppy1$Species)
+
+bush.daisy1<-peak%>%filter(Species=="California Brittlebush"|Species=="Trailing African Daisy ")
+bush.daisy<-circular(bush.daisy1$doy.a, units = "degrees", template = "geographics")
+watson.williams.test(bush.daisy, bush.daisy1$Species)
+
+bush.pride1<-peak%>%filter(Species=="California Brittlebush"|Species=="Pride of Madeira")
+bush.pride<-circular(bush.pride1$doy.a, units = "degrees", template = "geographics")
+watson.williams.test(bush.pride, bush.pride1$Species)
+
+poppy.daisy1<-peak%>%filter(Species=="California Poppy"|Species=="Trailing African Daisy ")
+poppy.daisy<-circular(poppy.daisy1$doy.a, units = "degrees", template = "geographics")
+watson.williams.test(poppy.daisy, poppy.daisy1$Species)
+
+poppy.pride1<-peak%>%filter(Species=="California Poppy"|Species=="Pride of Madeira")
+poppy.pride<-circular(poppy.pride1$doy.a, units = "degrees", template="geographics")
+watson.williams.test(poppy.pride, poppy.pride1$Species)
+
+daisy.pride1<-peak%>%filter(Species=="Trailing African Daisy "|Species=="Pride of Madeira")
+daisy.pride<-circular(daisy.pride1$doy.a, units = "degrees", template = "geographics")
+watson.williams.test(daisy.pride, daisy.pride1$Species)
+
+
+
