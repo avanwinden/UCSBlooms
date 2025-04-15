@@ -15,18 +15,18 @@ Phenostages$doy.a <- (Phenostages$doy*360)/365
 
 peak<-Phenostages%>%filter(Phenostage=="4")
 
-native<-peak%>%filter(Species=="Lemonade Berry"|Species=="California Brittlebush"|
+nativeP<-peak%>%filter(Species=="Lemonade Berry"|Species=="California Brittlebush"|
                         Species=="California Poppy")
 
-invasive<-peak%>%filter(Species=="Indian Hawthorn"|Species=="Trailing African Daisy "|
+invasiveP<-peak%>%filter(Species=="Indian Hawthorn"|Species=="Trailing African Daisy "|
                           Species=="Pride of Madeira")
 
 
-native_circ<-circular(native$doy.a, units="degrees", template="geographics")
-invasive_circ<-circular(invasive$doy.a, units = "degrees", template = "geographics")
+nativeP_circ<-circular(nativeP$doy.a, units="degrees", template="geographics")
+invasiveP_circ<-circular(invasiveP$doy.a, units = "degrees", template = "geographics")
 
-mean.circular(native_circ)
-mean.circular(invasive_circ)
+mean.circular(nativeP_circ)
+mean.circular(invasiveP_circ)
 
 #Q2: Do Invasive bloom earlier? Look at stage 3: leading blooms 
 
@@ -46,8 +46,25 @@ hawthron_lead_circ<-circular(hawthron_lead$doy.a, units = "degrees", template = 
 poppy_lead_circ<-circular(poppy_lead$doy.a, units = "degrees", template = "geographics")
 pride_lead_circ<-circular(pride_lead$doy.a, units = "degrees", template = "geographics")
 
+mean.circular(berry_lead_circ)
+mean.circular(bush_lead_circ)
+mean.circular(daisy_lead_circ)
+mean.circular(hawthron_lead_circ)
+mean.circular(poppy_lead_circ)
+mean.circular(pride_lead_circ)
+
+nativeL<-leading%>%filter(Species=="Lemonade Berry"|Species=="California Brittlebush"|
+                         Species=="California Poppy")
+
+invasiveL<-leading%>%filter(Species=="Indian Hawthorn"|Species=="Trailing African Daisy "|
+                           Species=="Pride of Madeira")
 
 
+nativeL_circ<-circular(nativeL$doy.a, units="degrees", template="geographics")
+invasiveL_circ<-circular(invasiveL$doy.a, units = "degrees", template = "geographics")
+
+mean.circular(nativeL_circ)
+mean.circular(invasiveL_circ)
 
 
 
