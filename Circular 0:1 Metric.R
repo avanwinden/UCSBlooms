@@ -81,33 +81,34 @@ rayleigh.test(prideYN_circ)
 
 {layout(matrix(c(1,2,3,4,5,6),3,2))
   par(mar = c(1, .2, 1, .2))
-  rose.diag(berryYN_circ, bins = 75, main = "Berry Flowering n=", axes = FALSE, prop = 1)
+  rose.diag(berryYN_circ, bins = 75, main = "Berry Flowering n= 43", axes = FALSE, prop = 1)
   axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)), 
                 labels=c("91", "365", "274", "183"), cex = 0.5, tcl.text = -0.1 )
   arrows.circular(mean(berryYN_circ), col= "yellow")
-  rose.diag(bushYN_circ, bins = 75, main = "Bush Flowering n=", axes = FALSE, prop = 1) 
+  rose.diag(bushYN_circ, bins = 75, main = "Bush Flowering n= 119", axes = FALSE, prop = 1) 
   axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)), 
                 labels=c("91", "365", "274", "183"), cex = 0.5, tcl.text = -0.1 )
   arrows.circular(mean(bushYN_circ), col = "red")
-  rose.diag(daisyYN_circ, bins = 75, main = "Daisy Flowering n=", axes = FALSE, prop = 1) 
+  rose.diag(daisyYN_circ, bins = 75, main = "Daisy Flowering n= 162", axes = FALSE, prop = 1) 
   axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)), 
                 labels=c("91", "365", "274", "183"), cex = 0.5, tcl.text = -0.1 )
   arrows.circular(mean(daisyYN_circ), col ="blue")
-  rose.diag(hawthronYN_circ, bins = 75, main = "Thorn Flowering n=", axes = FALSE, prop = 1) 
+  rose.diag(hawthronYN_circ, bins = 75, main = "Thorn Flowering n= 138", axes = FALSE, prop = 1) 
   axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)), 
                 labels=c("91", "365", "274", "183"), cex = 0.5, tcl.text = -0.1 )
   arrows.circular(mean(hawthronYN_circ), col="green")
-  rose.diag(poppyYN_circ, bins = 75, main = "Poppy Flowering n=", axes = FALSE, prop = 1) 
+  rose.diag(poppyYN_circ, bins = 75, main = "Poppy Flowering n= 128", axes = FALSE, prop = 1) 
   axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)), 
                 labels=c("91", "365", "274", "183"), cex = 0.5, tcl.text = -0.1 )
   arrows.circular(mean(poppyYN_circ), col="orange")
-  rose.diag(prideYN_circ, bins = 75, main = "Pride Flowering n=", axes = FALSE, prop = 1) 
+  rose.diag(prideYN_circ, bins = 75, main = "Pride Flowering n= 110", axes = FALSE, prop = 1) 
   axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)), 
                 labels=c("91", "365", "274", "183"), cex = 0.5, tcl.text = -0.1 )
   arrows.circular(mean(prideYN_circ), col="purple")}
 
 
-bush.thorn2<-Flowering%>%filter(Species=="California Brittlebush"|Species=="Indian Hawthorn")
+{#watson williams tests, 17 warnings, probably shouldnt be usung this test for this dataset
+  bush.thorn2<-Flowering%>%filter(Species=="California Brittlebush"|Species=="Indian Hawthorn")
 bush.thorn<-circular(bush.thorn2$doy.a, units = "degrees",template = "geographics")
 watson.williams.test(bush.thorn,bush.thorn2$Species)
 
@@ -165,7 +166,8 @@ watson.williams.test(poppy.pride, poppy.pride2$Species)
 
 daisy.pride2<-Flowering%>%filter(Species=="Trailing African Daisy "|Species=="Pride of Madeira")
 daisy.pride<-circular(daisy.pride2$doy.a, units = "degrees", template = "geographics")
-watson.williams.test(daisy.pride, daisy.pride2$Species)
+watson.williams.test(daisy.pride, daisy.pride2$Species)}
+
 
 
 

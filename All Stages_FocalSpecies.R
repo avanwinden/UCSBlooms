@@ -24,7 +24,7 @@ Phenostages_plot <- ggplot(Phenostages, aes(x=doy, y=parabola, color=Species, fi
 Phenostages_plot +
   xlab("Day of the Year") +
   ylab("Stage")+
-  ylim(1,4)+
+  ylim(1,4)
 
 
 Phenostages$Phenostage <- as.factor(Phenostages$Phenostage)
@@ -56,3 +56,20 @@ all_plot_day +
   xlab("Date of Observation") +
   ylab("Stage") +ylim(1,4)
 # yes it does, shows summer is really hard time to get observations
+## clearly areas of the graph that have a lot more observations (dots)
+
+
+
+
+
+#Poppy is weird, Let's look at it.
+Poppy<-Phenostages%>%filter(Species=="California Poppy")
+poppy_plot<-ggplot(Poppy, aes(x=doy, y=parabola))+
+  geom_jitter(height = .2) +
+  geom_smooth(method="loess")
+poppy_plot +
+  xlab("Day of the Year") +
+  ylab("Stage") +ylim(1,4)
+
+
+
