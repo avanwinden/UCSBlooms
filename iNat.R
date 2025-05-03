@@ -6,12 +6,16 @@ library(dplyr)
 #Complete data exported from iNaturlaist for all observations in project
 Complete_Project<-read.csv("observations-537390.csv")
 Complete_Project$day <- as.Date(Complete_Project$observed_on)
-year_Project<-subset(Complete_Project,day <= "2020-04-01")
+year_Project<-subset(Complete_Project,day <= "2020-03-18")
+length(unique(year_Project$user_id))
+
+
 #Breakdown (basic stats) of the sub-projects & umbrella project 
 Summary_SubProjects<-read.csv("iNat_Projects.csv")
 Summary_SubProjects$month<- as.Date(Summary_SubProjects$month_year, "%m/%d/%y") #anytime within month assigned to first of month
-year_SubProjects<-subset(Summary_SubProjects, month <="2020-04-01")
 Summary_Project<-data.frame("observations"=5876,"observers"=39,"species"=396)
+year_SubProjects<-subset(Summary_SubProjects, month <="2020-04-01")
+
 
 
 #SPECIES
