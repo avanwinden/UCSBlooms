@@ -47,7 +47,7 @@ rayleigh.test(poppy_peak_circ)
 mean.circular(pride_peak_circ)
 rho.circular(pride_peak_circ)
 rayleigh.test(pride_peak_circ)
-e# r vector lengths indicate that the poppy has the widest spread of peak flowering days 
+# r vector lengths indicate that the poppy has the widest spread of peak flowering days 
 #at r=.70 and next lowest r is 0.87 for the daisy 
 
 #This needs a legend I think
@@ -68,39 +68,89 @@ axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)),
 
 
 
+plot.circular(berry_peak_circ, col="#60992D", main ="Berry Peak Bloom", stack= TRUE, axes=FALSE,
+                bins = 365, shrink = 1.5, tol = 0, sep = 0.15)
+axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)), 
+                labels=c("", "JAN 1", "", "JUL 2"), cex = 0.5, tcl.text = -0.1)
+arrows.circular(mean(berry_peak_circ), col= "#60992D")
 
-#Rose Diagrams, bins of 75 would be about every 5 days #then do for all and print on one screen
-#would be nice to report the n and theta number here maybe? 
+plot.circular(bush_peak_circ, col = "#F6BB2D", main = "Bush Peak Bloom", axes = FALSE, 
+              stack = TRUE, bins = 365, shrink = 1.5, tol = 0, sep = 0.15) 
+axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)), 
+              labels=c("", "JAN 1", "", "JUL 2"), cex = 0.5, tcl.text = -0.1 )
+arrows.circular(mean(bush_peak_circ), col = "#F6BB2D")
+
+plot.circular(daisy_peak_circ, col = "#B68CB8", main = "Daisy Peak Bloom", axes = FALSE, 
+              stack = TRUE, bins = 365, shrink = 1.5, tol = 0, sep = 0.15)  
+axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)), 
+              labels=c("", "JAN 1", "", "JUL 2"), cex = 0.5, tcl.text = -0.1 )
+arrows.circular(mean(daisy_peak_circ), col ="#B68CB8")
+
+plot.circular(hawthron_peak_circ, col = "#E660BA", main = "Thorn Peak Bloom", axes = FALSE, 
+              stack = TRUE, bins = 365, shrink = 1.5, tol = 0, sep = 0.15)  
+axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)), 
+              labels=c("", "JAN 1", "", "JUL 2"), cex = 0.5, tcl.text = -0.1 )
+arrows.circular(mean(hawthron_peak_circ), col="#E660BA")
+
+plot.circular(poppy_peak_circ, col = "#F26D19", main = "Poppy Peak Bloom", axes = FALSE, 
+              stack = TRUE, bins = 365, shrink = 1.5, tol = 0, sep = 0.15)  
+axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)), 
+              labels=c("", "JAN 1", "", "JUL 2"), cex = 0.5, tcl.text = -0.1 )
+arrows.circular(mean(poppy_peak_circ), col="#F26D19")
+
+plot.circular(pride_peak_circ, col = "#615096", main = "Pride Peak Bloom", axes = FALSE, 
+              stack = TRUE, bins = 365, shrink = 1.5, tol = 0, sep = 0.15)  
+axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)), 
+              labels=c("", "JAN 1", "", "JUL 2"), cex = 0.5, tcl.text = -0.1 )
+arrows.circular(mean(pride_peak_circ), col="#615096")
+
+
 {layout(matrix(c(1,2,3,4,5,6),3,2))
   par(mar = c(1, .2, 1, .2))
-rose.diag(berry_peak_circ, bins = 75, main = "Berry Peak n=6", axes = FALSE, prop = 1)
-axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)), 
-              labels=c("91", "365", "274", "183"), cex = 0.5, tcl.text = -0.1 )
-arrows.circular(mean(berry_peak_circ), col= "yellow")
-rose.diag(bush_peak_circ, bins = 75, main = "Bush Peak n=21", axes = FALSE, prop = 1) 
-axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)), 
-              labels=c("91", "365", "274", "183"), cex = 0.5, tcl.text = -0.1 )
-arrows.circular(mean(bush_peak_circ), col = "red")
-rose.diag(daisy_peak_circ, bins = 75, main = "Daisy Peak n=46", axes = FALSE, prop = 1) 
-axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)), 
-              labels=c("91", "365", "274", "183"), cex = 0.5, tcl.text = -0.1 )
-arrows.circular(mean(daisy_peak_circ), col ="blue")
-rose.diag(hawthron_peak_circ, bins = 75, main = "Thorn Peak n=24", axes = FALSE, prop = 1) 
-axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)), 
-              labels=c("91", "365", "274", "183"), cex = 0.5, tcl.text = -0.1 )
-arrows.circular(mean(hawthron_peak_circ), col="green")
-rose.diag(poppy_peak_circ, bins = 75, main = "Poppy Peak n=60", axes = FALSE, prop = 1) 
-axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)), 
-              labels=c("91", "365", "274", "183"), cex = 0.5, tcl.text = -0.1 )
-arrows.circular(mean(poppy_peak_circ), col="orange")
-rose.diag(pride_peak_circ, bins = 75, main = "Pride Peak n=34", axes = FALSE, prop = 1) 
-axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)), 
-              labels=c("91", "365", "274", "183"), cex = 0.5, tcl.text = -0.1 )
-arrows.circular(mean(pride_peak_circ), col="purple")}
+ 
+  plot.circular(berry_peak_circ, col="#60992D", main ="Rhus integrifolia", stack= TRUE, axes=FALSE,
+                bins = 365, shrink = 1.5, tol = 0, sep = 0.15)
+  axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)), 
+                labels=c("", "JAN 1", "", "JUL 2"), cex = 0.5, tcl.text = -0.1)
+  arrows.circular(mean(berry_peak_circ), col= "#60992D")
+  
+  plot.circular(bush_peak_circ, col = "#F6BB2D", main = "Encelia californica", axes = FALSE, 
+                stack = TRUE, bins = 365, shrink = 1.5, tol = 0, sep = 0.15) 
+  axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)), 
+                labels=c("", "JAN 1", "", "JUL 2"), cex = 0.5, tcl.text = -0.1 )
+  arrows.circular(mean(bush_peak_circ), col = "#F6BB2D")
+  
+  plot.circular(daisy_peak_circ, col = "#B68CB8", main = "Osteospermum fruticosum", axes = FALSE, 
+                stack = TRUE, bins = 365, shrink = 1.5, tol = 0, sep = 0.15)  
+  axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)), 
+                labels=c("", "JAN 1", "", "JUL 2"), cex = 0.5, tcl.text = -0.1 )
+  arrows.circular(mean(daisy_peak_circ), col ="#B68CB8")
+  
+  plot.circular(hawthron_peak_circ, col = "#E660BA", main = "Rhaphiolepis indica", axes = FALSE, 
+                stack = TRUE, bins = 365, shrink = 1.5, tol = 0, sep = 0.15)  
+  axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)), 
+                labels=c("", "JAN 1", "", "JUL 2"), cex = 0.5, tcl.text = -0.1 )
+  arrows.circular(mean(hawthron_peak_circ), col="#E660BA")
+  
+  plot.circular(poppy_peak_circ, col = "#F26D19", main = "Eschscholzia californica", axes = FALSE, 
+                stack = TRUE, bins = 365, shrink = 1.5, tol = 0, sep = 0.15)  
+  axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)), 
+                labels=c("", "JAN 1", "", "JUL 2"), cex = 0.5, tcl.text = -0.1 )
+  arrows.circular(mean(poppy_peak_circ), col="#F26D19")
+  
+  plot.circular(pride_peak_circ, col = "#615096", main = "Echium candicans", axes = FALSE, 
+                stack = TRUE, bins = 365, shrink = 1.5, tol = 0, sep = 0.15)  
+  axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)), 
+                labels=c("", "JAN 1", "", "JUL 2"), cex = 0.5, tcl.text = -0.1 )
+  arrows.circular(mean(pride_peak_circ), col="#615096") 
+  }
+
+
+
+
 
 
 ### now need to test significant differences between the spread (r) and the mean angles 
-
 #Watson Williams Test, then pairsewsie posthoc comparisons. Testing the means
 
 peak<-Phenostages%>%filter(Phenostage=="4")

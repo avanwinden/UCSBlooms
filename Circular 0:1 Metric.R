@@ -79,32 +79,74 @@ rayleigh.test(prideYN_circ)
 # really need to look into california brittlebush more. Big difference in mean day
 # bush and poppy are the only two where the eman day is later. Look into that 
 
+plot.circular(berryYN_circ, col="#60992D", main ="Berry Peak Bloom", stack= TRUE, axes=FALSE,
+              bins = 365, shrink = 1.5, tol = 0, sep = 0.028)
+axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)), 
+              labels=c("", "JAN 1", "", "JUL 2"), cex = 0.5, tcl.text = -0.1)
+arrows.circular(mean(berryYN_circ), col= "#60992D")
+
+plot.circular(bushYN_circ, col = "#F6BB2D", main = "Bush Peak Bloom", axes = FALSE, 
+              stack = TRUE, bins = 365, shrink = 1.5, tol = 0, sep = 0.028) 
+axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)), 
+              labels=c("", "JAN 1", "", "JUL 2"), cex = 0.5, tcl.text = -0.1 )
+arrows.circular(mean(bushYN_circ), col = "#F6BB2D")
+
+plot.circular(daisyYN_circ, col = "#B68CB8", main = "Daisy Peak Bloom", axes = FALSE, 
+              stack = TRUE, bins = 365, shrink = 1.5, tol = 0, sep = 0.028)  
+axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)), 
+              labels=c("", "JAN 1", "", "JUL 2"), cex = 0.5, tcl.text = -0.1 )
+arrows.circular(mean(daisyYN_circ), col ="#B68CB8")
+
+plot.circular(hawthronYN_circ, col = "#E660BA", main = "Thorn Peak Bloom", axes = FALSE, 
+              stack = TRUE, bins = 365, shrink = 1.5, tol = 0, sep = 0.028)  
+axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)), 
+              labels=c("", "JAN 1", "", "JUL 2"), cex = 0.5, tcl.text = -0.1 )
+arrows.circular(mean(hawthronYN_circ), col="#E660BA")
+
+plot.circular(poppyYN_circ, col = "#F26D19", main = "Poppy Peak Bloom", axes = FALSE, 
+              stack = TRUE, bins = 365, shrink = 1.5, tol = 0, sep = 0.028)  
+axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)), 
+              labels=c("", "JAN 1", "", "JUL 2"), cex = 0.5, tcl.text = -0.1 )
+arrows.circular(mean(poppyYN_circ), col="#F26D19")
+
+plot.circular(prideYN_circ, col = "#615096", main = "Pride Peak Bloom", axes = FALSE, 
+              stack = TRUE, bins = 365, shrink = 1.5, tol = 0, sep = 0.028)  
+axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)), 
+              labels=c("", "JAN 1", "", "JUL 2"), cex = 0.5, tcl.text = -0.1 )
+arrows.circular(mean(prideYN_circ), col="#615096")
+
 {layout(matrix(c(1,2,3,4,5,6),3,2))
   par(mar = c(1, .2, 1, .2))
-  rose.diag(berryYN_circ, bins = 75, main = "Berry Flowering n= 43", axes = FALSE, prop = 1)
+  plot.circular(berryYN_circ, col="#60992D", main ="Rhus integrifolia", stack= TRUE, axes=FALSE,
+                bins = 365, shrink = 1.5, tol = 0, sep = 0.028)
   axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)), 
-                labels=c("91", "365", "274", "183"), cex = 0.5, tcl.text = -0.1 )
-  arrows.circular(mean(berryYN_circ), col= "yellow")
-  rose.diag(bushYN_circ, bins = 75, main = "Bush Flowering n= 119", axes = FALSE, prop = 1) 
+                labels=c("", "JAN 1", "", "JUL 2"), cex = 0.5, tcl.text = -0.1)
+  arrows.circular(mean(berryYN_circ), col= "#60992D")
+  plot.circular(bushYN_circ, col = "#F6BB2D", main = "Encelia californica", axes = FALSE, 
+                stack = TRUE, bins = 365, shrink = 1.5, tol = 0, sep = 0.028) 
   axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)), 
-                labels=c("91", "365", "274", "183"), cex = 0.5, tcl.text = -0.1 )
-  arrows.circular(mean(bushYN_circ), col = "red")
-  rose.diag(daisyYN_circ, bins = 75, main = "Daisy Flowering n= 162", axes = FALSE, prop = 1) 
+                labels=c("", "JAN 1", "", "JUL 2"), cex = 0.5, tcl.text = -0.1 )
+  arrows.circular(mean(bushYN_circ), col = "#F6BB2D")
+  plot.circular(daisyYN_circ, col = "#B68CB8", main = "Osteospermum fruticosum", axes = FALSE, 
+                stack = TRUE, bins = 365, shrink = 1.5, tol = 0, sep = 0.028)  
   axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)), 
-                labels=c("91", "365", "274", "183"), cex = 0.5, tcl.text = -0.1 )
-  arrows.circular(mean(daisyYN_circ), col ="blue")
-  rose.diag(hawthronYN_circ, bins = 75, main = "Thorn Flowering n= 138", axes = FALSE, prop = 1) 
+                labels=c("", "JAN 1", "", "JUL 2"), cex = 0.5, tcl.text = -0.1 )
+  arrows.circular(mean(daisyYN_circ), col ="#B68CB8")
+  plot.circular(hawthronYN_circ, col = "#E660BA", main = "Rhaphiolepis indica", axes = FALSE, 
+                stack = TRUE, bins = 365, shrink = 1.5, tol = 0, sep = 0.028)  
   axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)), 
-                labels=c("91", "365", "274", "183"), cex = 0.5, tcl.text = -0.1 )
-  arrows.circular(mean(hawthronYN_circ), col="green")
-  rose.diag(poppyYN_circ, bins = 75, main = "Poppy Flowering n= 128", axes = FALSE, prop = 1) 
+                labels=c("", "JAN 1", "", "JUL 2"), cex = 0.5, tcl.text = -0.1 )
+  arrows.circular(mean(hawthronYN_circ), col="#E660BA")
+  plot.circular(poppyYN_circ, col = "#F26D19", main = "Eschscholzia californica", axes = FALSE, 
+                stack = TRUE, bins = 365, shrink = 1.5, tol = 0, sep = 0.028)  
   axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)), 
-                labels=c("91", "365", "274", "183"), cex = 0.5, tcl.text = -0.1 )
-  arrows.circular(mean(poppyYN_circ), col="orange")
-  rose.diag(prideYN_circ, bins = 75, main = "Pride Flowering n= 110", axes = FALSE, prop = 1) 
+                labels=c("", "JAN 1", "", "JUL 2"), cex = 0.5, tcl.text = -0.1 )
+  arrows.circular(mean(poppyYN_circ), col="#F26D19")
+  plot.circular(prideYN_circ, col = "#615096", main = "Echium candicans", axes = FALSE, 
+                stack = TRUE, bins = 365, shrink = 1.5, tol = 0, sep = 0.028)  
   axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)), 
-                labels=c("91", "365", "274", "183"), cex = 0.5, tcl.text = -0.1 )
-  arrows.circular(mean(prideYN_circ), col="purple")}
+                labels=c("", "JAN 1", "", "JUL 2"), cex = 0.5, tcl.text = -0.1 )
+  arrows.circular(mean(prideYN_circ), col="#615096")}
 
 
 {#watson williams tests, 17 warnings, probably shouldnt be usung this test for this dataset
