@@ -27,7 +27,8 @@ arrows.circular(mean(not_flowering_circ), col = "red")
 
 plot.circular(not_flowering_circ, col="red", main ="Not Flowering", stack=TRUE, axes=FALSE)
 arrows.circular(mean(not_flowering_circ), col= "red")
-# immediate looking just at the graph notice the mean is early in the year
+
+
 mean.circular(not_flowering_circ)
 rho.circular(not_flowering_circ)
 rayleigh.test(not_flowering_circ)
@@ -39,7 +40,7 @@ rayleigh.test(not_flowering_circ)
 watson.two.test(flowering_circ, not_flowering_circ)
 # when looking at summed focal species and bloom and not bloom categories there is a significant difference in groups
 
-#now I want to seperate by species 
+#now I want to separate by species 
 
 PoppyYN<-Flowering%>%filter(Species=="California Poppy")
 DaisyYN<-Flowering%>%filter(Species=="Trailing African Daisy ")
