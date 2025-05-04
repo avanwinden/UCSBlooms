@@ -71,5 +71,29 @@ poppy_plot +
   xlab("Day of the Year") +
   ylab("Stage") +ylim(1,4)
 
+Bush<-Phenostages%>%filter(Species=="California Brittlebush")
+bush_plot<-ggplot(Bush, aes(x=doy, y=parabola))+
+  geom_jitter(height = .2) +
+  geom_smooth(method="loess")
+bush_plot +
+  xlab("Day of the Year") +
+  ylab("Stage") +ylim(1,4)
 
 
+Bush3<-Bush%>%filter(Phenostage=="3")
+Bush6<-Bush%>%filter(Phenostage=="6")
+Bush4<-Bush%>%filter(Phenostage=="4")
+poppy4<-Poppy%>%filter(Phenostage=="4")
+
+Poppy<-Phenostages%>%filter(Species=="California Poppy")
+Bush<-Phenostages%>%filter(Species=="California Brittlebush")
+Bush4<-Bush%>%filter(Phenostage=="4")
+poppy4<-Poppy%>%filter(Phenostage=="4")
+berry<-Phenostages%>%filter(Species=="Lemonade Berry")
+berry4<-berry%>%filter(Phenostage=="4")
+daisy<-Phenostages%>%filter(Species=="Trailing African Daisy ")
+daisy4<-daisy%>%filter(Phenostage=="4")
+pride<-Phenostages%>%filter(Species=="Pride of Madeira")
+pride4<-pride%>%filter(Phenostage=="4")
+thorn<-Phenostages%>%filter(Species=="Indian Hawthorn")
+thorn4<-thorn%>%filter(Phenostage=="4")

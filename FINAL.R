@@ -163,6 +163,8 @@ axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)),
               labels=c("", "JAN 1", "", "JUL 2"), cex = 0.5, tcl.text = -0.1 )
 arrows.circular(mean(flowering_circ), col= "green")
 
+mean.circular(flowering_circ)
+
 {layout(matrix(c(1,2,3,4,5,6),3,2))
   par(mar = c(1, .2, 1, .2))
   plot.circular(berryYN_circ, col="#60992D", main ="Rhus integrifolia", stack= TRUE, axes=FALSE,
@@ -196,6 +198,41 @@ arrows.circular(mean(flowering_circ), col= "green")
                 labels=c("", "JAN 1", "", "JUL 2"), cex = 0.5, tcl.text = -0.1 )
   arrows.circular(mean(prideYN_circ), col="#615096")}
 
+#OTHER TESTS/POPPY AND BUSH 
+Poppy<-Phenostages%>%filter(Species=="California Poppy")
+Bush<-Phenostages%>%filter(Species=="California Brittlebush")
+Bush4<-Bush%>%filter(Phenostage=="4")
+poppy4<-Poppy%>%filter(Phenostage=="4")
+berry<-Phenostages%>%filter(Species=="Lemonade Berry")
+berry4<-berry%>%filter(Phenostage=="4")
+daisy<-Phenostages%>%filter(Species=="Trailing African Daisy ")
+daisy4<-daisy%>%filter(Phenostage=="4")
+pride<-Phenostages%>%filter(Species=="Pride of Madeira")
+pride4<-pride%>%filter(Phenostage=="4")
+thorn<-Phenostages%>%filter(Species=="Indian Hawthorn")
+thorn4<-thorn%>%filter(Phenostage=="4")
+
+bush56<-Bush%>%filter(Phenostage=="5"|Phenostage=="6")
+berry56<-berry%>%filter(Phenostage=="5"|Phenostage=="6")
+daisy56<-daisy%>%filter(Phenostage=="5"|Phenostage=="6")
+pride56<-pride%>%filter(Phenostage=="5"|Phenostage=="6")
+thorn56<-thorn%>%filter(Phenostage=="5"|Phenostage=="6")
+poppy56<-Poppy%>%filter(Phenostage=="5"|Phenostage=="6")
+
+
+bush127<-Bush%>%filter(Phenostage=="1"|Phenostage=="2"|Phenostage=="7")
+berry127<-berry%>%filter(Phenostage=="1"|Phenostage=="2"|Phenostage=="7")
+daisy127<-daisy%>%filter(Phenostage=="1"|Phenostage=="2"|Phenostage=="7")
+pride127<-pride%>%filter(Phenostage=="1"|Phenostage=="2"|Phenostage=="7")
+thorn127<-thorn%>%filter(Phenostage=="1"|Phenostage=="2"|Phenostage=="7")
+poppy127<-Poppy%>%filter(Phenostage=="1"|Phenostage=="2"|Phenostage=="7")
+
+bush3<-Bush%>%filter(Phenostage=="3")
+berry3<-berry%>%filter(Phenostage=="3")
+daisy3<-daisy%>%filter(Phenostage=="3")
+pride3<-pride%>%filter(Phenostage=="3")
+thorn3<-thorn%>%filter(Phenostage=="3")
+poppy3<-Poppy%>%filter(Phenostage=="3")
 
 
 
