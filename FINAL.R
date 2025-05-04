@@ -234,6 +234,6 @@ pride3<-pride%>%filter(Phenostage=="3")
 thorn3<-thorn%>%filter(Phenostage=="3")
 poppy3<-Poppy%>%filter(Phenostage=="3")
 
-
+fours<-Phenostages%>%filter(Phenostage=="4")
 
 
