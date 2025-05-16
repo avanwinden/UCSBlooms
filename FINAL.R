@@ -182,11 +182,11 @@ mean.circular(flowering_circ)
   axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)), 
                 labels=c("", "JAN 1", "", "JUL 2"), cex = 0.5, tcl.text = -0.1 )
   arrows.circular(mean(daisyYN_circ), col ="#B68CB8")
-  plot.circular(hawthronYN_circ, col = "#E660BA", main = "Rhaphiolepis indica", axes = FALSE, 
+  plot.circular(hawthornYN_circ, col = "#E660BA", main = "Rhaphiolepis indica", axes = FALSE, 
                 stack = TRUE, bins = 365, shrink = 1.5, tol = 0, sep = 0.028)  
   axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)), 
                 labels=c("", "JAN 1", "", "JUL 2"), cex = 0.5, tcl.text = -0.1 )
-  arrows.circular(mean(hawthronYN_circ), col="#E660BA")
+  arrows.circular(mean(hawthornYN_circ), col="#E660BA")
   plot.circular(poppyYN_circ, col = "#F26D19", main = "Eschscholzia californica", axes = FALSE, 
                 stack = TRUE, bins = 365, shrink = 1.5, tol = 0, sep = 0.028)  
   axis.circular(at=circular(seq(0, 2*pi-pi/2, pi/2)), 
@@ -235,5 +235,30 @@ thorn3<-thorn%>%filter(Phenostage=="3")
 poppy3<-Poppy%>%filter(Phenostage=="3")
 
 fours<-Phenostages%>%filter(Phenostage=="4")
+
+#COMPARISONS 
+
+watson.two.test(daisy_peak_circ,bush_peak_circ)
+watson.two.test(berry_peak_circ,hawthron_peak_circ)
+watson.two.test(poppy_peak_circ,pride_peak_circ)
+
+peak_rad <- rad(peak$doy.a)
+peak_treat <- as.factor(peak$Species)
+summary(manova(cbind(cos(peak_rad),sin(peak_rad)) ~ peak_treat))
+
+
+
+watson.two.test(daisyYN_circ,bushYN_circ)
+watson.two.test(berryYN_circ,bushYN_circ)
+watson.two.test(poppyYN_circ,prideYN_circ)
+
+bloom_rad<-rad(Flowering$doy.a)
+bloom_treat<-as.factor(Flowering$Species)
+summary(manova(cbind(cos(bloom_rad),sin(bloom_rad))~bloom_treat))
+
+
+
+
+
 
 
