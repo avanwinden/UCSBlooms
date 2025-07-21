@@ -10,6 +10,12 @@ year_Project<-subset(Complete_Project,day <= "2020-03-18")
 length(unique(year_Project$user_id))
 
 
+length(unique(year_Project$taxon_family_name))
+length(unique(year_Project$taxon_genus_name))
+length(unique(year_Project$taxon_species_name))
+length(unique(year_Project$taxon_kingdom_name))
+
+
 #Breakdown (basic stats) of the sub-projects & umbrella project 
 Summary_SubProjects<-read.csv("iNat_Projects.csv")
 Summary_SubProjects$month<- as.Date(Summary_SubProjects$month_year, "%m/%d/%y") #anytime within month assigned to first of month
