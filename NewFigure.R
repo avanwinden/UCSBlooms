@@ -19,8 +19,9 @@ UCSBlooms %>% ggplot(aes(x=user_login))+
 
 UCSBlooms %>% 
   ggplot(aes(x=reorder(user_login, user_login, function(x)-length(x))))+ 
-  geom_bar() + xlab("Observer") +
-  ylab("Number of Observations")
+  geom_bar() + xlab("Unique Observers") +
+  ylab("Number of Observations") +
+  theme(axis.text.x = element_blank())
 
 
 UCSBlooms %>%
@@ -28,7 +29,7 @@ UCSBlooms %>%
   slice_max(n, n = 20) %>%  
   ggplot(aes(x = reorder(user_login, -n), y = n)) + 
   geom_bar(stat = "identity") + 
-  xlab("Observer") + 
+  xlab("Unique Observers") + 
   ylab("Number of Observations") + 
   ggtitle("Count of observations of top 20 observers") +
   theme(axis.text.x = element_blank())
