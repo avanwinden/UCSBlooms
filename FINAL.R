@@ -11,6 +11,7 @@ UCSBlooms<-subset(Complete_Project,day <= "2020-03-18")
 UCSBlooms$month <- month(UCSBlooms$day)
 #UCSBlooms is the data included in the 03/11/2019 - 03/17/2020 run of the project
 length(unique(UCSBlooms$user_id))
+length(unique(UCSBlooms$scientific_name))
 
 blitz<-subset(UCSBlooms, day =="2019-04-06"|day=="2019-05-05"|day=="2019-06-07"|
                 day=="2019-10-19"|day=="2019-11-16"|day=="2020-01-11"|day=="2020-02-09"
