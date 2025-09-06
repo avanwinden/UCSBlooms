@@ -235,6 +235,14 @@ pride3<-pride%>%filter(Phenostage=="3")
 thorn3<-thorn%>%filter(Phenostage=="3")
 poppy3<-Poppy%>%filter(Phenostage=="3")
 
+bush6<-Bush%>%filter(Phenostage=="6")
+berry6<-berry%>%filter(Phenostage=="6")
+daisy6<-daisy%>%filter(Phenostage=="6")
+pride6<-pride%>%filter(Phenostage=="6")
+thorn6<-thorn%>%filter(Phenostage=="6")
+poppy6<-Poppy%>%filter(Phenostage=="6")
+
+
 fours<-Phenostages%>%filter(Phenostage=="4")
 
 #COMPARISONS 
